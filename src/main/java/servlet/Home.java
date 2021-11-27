@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import bo.FileItem;
+import dao.FileDAO;
 
 /**
  * Servlet implementation class Home
@@ -36,6 +40,11 @@ public class Home extends HttpServlet {
 //		} catch (Exception e) {
 //			request.setAttribute("role",null);
 //		}
+		
+		FileDAO fileDAO = new FileDAO();
+		ArrayList<FileItem> files = fileDAO.getAllFile();
+
+		request.setAttribute("files", files);
 		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
 		dispatcher.forward(request, response);
 	}

@@ -9,5 +9,8 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="/home/ductai26998/Documents/university/LTM/servlet-api.jar"/>
+	<classpathentry kind="lib" path="/home/ductai26998/Documents/university/LTM/Cuoiki/src/main/webapp/WEB-INF/lib/javax.servlet.jsp.jstl-1.2.5-b02.jar"/>
+	<classpathentry kind="lib" path="/home/ductai26998/Downloads/Kennest-shop-master/WebContent/WEB-INF/lib/javax.servlet.jsp.jstl-api-1.2.2.jar"/>
+	<classpathentry kind="lib" path="/home/ductai26998/Downloads/Kennest-shop-master/WebContent/WEB-INF/lib/mysql-connector-java-8.0.15.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
