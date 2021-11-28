@@ -65,4 +65,20 @@ public class FileDAO {
 			e.printStackTrace();
 		}
 	}
+
+	public void deleteFile(int id) {
+		Connection connection = null;
+		Statement statement = null;
+
+		try {
+			connection = DBConnection.getConnection();
+			String sql = "DELETE FROM files WHERE id=" + id;
+			statement = connection.createStatement();
+			statement.executeUpdate(sql);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 }

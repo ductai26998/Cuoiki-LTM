@@ -24,10 +24,6 @@
 	  padding: 1px;
 	  margin-top: 0;
 	}
-	#left-div {
-		background-color: rgba(236, 239, 240, 0.918);
-		flex: 1;
-	}
 	#content-view {
 		background-color: rgba(253, 253, 253, 0.918);
 		flex: 6;
@@ -61,26 +57,18 @@
 	}
 	
 	.file-thumbnail {
-		width: 200px;
-		height: 200px;
+		width: 320px;
+		height: 240px;
 	}
 	</style>
 </head>
 <body>
 	<div id="header">
-		<p style="font-size:16px;margin-left: 18px;font-weight: 400;">Office 366</p>
+		<p style="font-size:16px;margin-left: 18px;font-weight: 600;">My Collections</p>
 	</div>
 	<div id="flex-container-inner">
-		<div id="left-div">
-			<div style="margin-bottom: 12px; margin-top: 20px;">
-				<a style="text-decoration: none;margin: 12px;color: rgb(26, 34, 151);" href="url">Tải về ứng dụng TwoDrive</a>
-			</div>
-			<div>
-				<a style="text-decoration: none;margin: 12px;color: rgb(26, 34, 151);" href="url">Thông Tin Ứng Dụng</a>
-			</div>
-		</div>
 		<div id="content-view">
-			<p style="font-size: 20px; margin-left: 30px;font-weight: bold;">Tệp của tôi</p>
+			<p style="font-size: 20px; margin-left: 30px;font-weight: bold;">All files</p>
 			<hr class="solid" style="margin-left: 30px; margin-top: 10px; margin-right: 30px;">
 			<form style="margin-bottom: 30px; margin-top: 20px" method="post" action="home" enctype="multipart/form-data">
 				<span style="font-size:18px;margin-left: 30px;font-weight: 500;">Select file to upload: </span><input type="file" name="file" size="60" />
@@ -92,14 +80,25 @@
 					<th>Type</th>
 					<th>Size</th>
 					<th></th>
+					<th></th>
 				</tr>
 				<c:forEach items="${files}" var="file">
 					<tr>
 						<td>${ file.name }</td>
 						<td>${ file.type }</td>
-						<td>${ file.size }</td>
+						<td>${ file.size }KB</td>
 						<td>
-							<img class="file-thumbnail" src="${ file.url }" />
+							<c:if test="${ file.type.contains('image') }">
+								<img class="file-thumbnail" src="${ file.url }" />
+							</c:if>
+							<c:if test="${ file.type.contains('video') }">
+								<video width="320" height="240" controls>
+  								<source src="${ file.url }" type="${ file.type }">
+							</video>
+							</c:if>
+						</td>
+						<td>
+							<a href="${pageContext.request.contextPath}/deleteFile?id=${file.id}" role="button">Delete</a>
 						</td>
 					</tr>
 				</c:forEach>

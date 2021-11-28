@@ -7,6 +7,8 @@
 <title>Collection</title>
 </head>
 <body>
-Hello
+<%
+	response.sendRedirect(request.getContextPath() + "/home");
+%>
 </body>
 </html>

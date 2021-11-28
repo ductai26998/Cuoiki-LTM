@@ -1,34 +1,27 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import bo.FileItem;
 import dao.FileDAO;
-import utils.FileUpdateUtil;
 
 /**
- * Servlet implementation class Home
+ * Servlet implementation class DeleteFile
  */
-@WebServlet("/home")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 10, // 10 MB
-		maxFileSize = 1024 * 1024 * 50, // 50 MB
-		maxRequestSize = 1024 * 1024 * 100) // 100 MB
-public class Home extends HttpServlet {
+@WebServlet("/deleteFile")
+public class DeleteFile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Default constructor.
+	 * @see HttpServlet#HttpServlet()
 	 */
-	public Home() {
+	public DeleteFile() {
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -38,12 +31,13 @@ public class Home extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		FileDAO fileDAO = new FileDAO();
-		ArrayList<FileItem> files = fileDAO.getAllFile();
+		String productId = request.getParameter("id");
+		int id = Integer.parseInt(productId);
 
-		request.setAttribute("files", files);
-		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
-		dispatcher.forward(request, response);
+		FileDAO fileDAO = new FileDAO();
+		fileDAO.deleteFile(id);
+
+		response.sendRedirect(request.getContextPath() + "/home");
 	}
 
 	/**
@@ -52,11 +46,7 @@ public class Home extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-
-		ArrayList<String> fileInfo = FileUpdateUtil.saveImage(request);
-		FileDAO fileDAO = new FileDAO();
-		fileDAO.addFile(fileInfo);
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
