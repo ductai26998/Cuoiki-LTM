@@ -82,7 +82,7 @@
 		<div id="content-view">
 			<p style="font-size: 20px; margin-left: 30px;font-weight: bold;">Tệp của tôi</p>
 			<hr class="solid" style="margin-left: 30px; margin-top: 10px; margin-right: 30px;">
-			<form style="margin-bottom: 30px; margin-top: 20px" method="post" action="UploadFileServlet" enctype="multipart/form-data">
+			<form style="margin-bottom: 30px; margin-top: 20px" method="post" action="home" enctype="multipart/form-data">
 				<span style="font-size:18px;margin-left: 30px;font-weight: 500;">Select file to upload: </span><input type="file" name="file" size="60" />
 				<input style="padding: 4px 16px;" type="submit" value="Upload" />
 			</form>
