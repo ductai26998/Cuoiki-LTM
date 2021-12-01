@@ -22,7 +22,15 @@
 	  color: rgb(247, 247, 247);
 	  text-align: left;
 	  padding: 1px;
+	  padding-right: 20px;
 	  margin-top: 0;
+	  display: flex;
+	  flex-direction: row;
+	  justify-content: space-between
+	}
+	.user-info{
+		display: flex;
+		flex-direction: row;
 	}
 	#content-view {
 		background-color: rgba(253, 253, 253, 0.918);
@@ -65,8 +73,34 @@
 <body>
 	<div id="header">
 		<p style="font-size:16px;margin-left: 18px;font-weight: 600;">My Collections</p>
+		<c:if test="${ username != null }">
+		<div class="user-info">
+			<p style="margin-right: 10px; font-weight: 600;">${ username }</p>
+			<p>
+				<a href="logout" style="color: white;">Logout</a>
+			</p>
+		</div>
+		</c:if>
+		<c:if test="${ username == null }">
+		<div class="user-info">
+			<p style="margin-right: 10px;">
+				<a href="login" style="color: white;">Login</a>
+			</p>
+			<p>
+				<a href="register" style="color: white;">Register</a>
+			</p>
+		</div>
+		</c:if>
 	</div>
 	<div id="flex-container-inner">
+		<c:if test="${ username == null }">
+			<h3>
+				Please login
+				<a href="login" >here</a>
+				to use application !!!
+			</h3>
+		</c:if>
+		<c:if test="${ username != null }">
 		<div id="content-view">
 			<p style="font-size: 20px; margin-left: 30px;font-weight: bold;">All files</p>
 			<hr class="solid" style="margin-left: 30px; margin-top: 10px; margin-right: 30px;">
@@ -98,12 +132,13 @@
 							</c:if>
 						</td>
 						<td>
-							<a href="${pageContext.request.contextPath}/deleteFile?id=${file.id}" role="button">Delete</a>
+							<a href="deleteFile?id=${file.id}" role="button">Delete</a>
 						</td>
 					</tr>
 				</c:forEach>
 				</table>
 		</div>
+		</c:if>
 	</div>
 </body>
 </html>

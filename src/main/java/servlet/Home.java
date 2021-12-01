@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bo.FileItem;
 import dao.FileDAO;
@@ -38,10 +39,19 @@ public class Home extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String userId = null;
+		String username = null;
+		if (session.getAttribute("userId") != null) {
+			userId = session.getAttribute("userId").toString();
+			username = session.getAttribute("username").toString();
+		}
+
 		FileDAO fileDAO = new FileDAO();
-		ArrayList<FileItem> files = fileDAO.getAllFile();
+		ArrayList<FileItem> files = fileDAO.getAllFileOfMe(userId);
 
 		request.setAttribute("files", files);
+		request.setAttribute("username", username);
 		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher("/WEB-INF/views/home.jsp");
 		dispatcher.forward(request, response);
 	}
@@ -53,10 +63,14 @@ public class Home extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-
-		ArrayList<String> fileInfo = FileUpdateUtil.saveImage(request);
-		FileDAO fileDAO = new FileDAO();
-		fileDAO.addFile(fileInfo);
+		HttpSession session = request.getSession();
+		String userId = null;
+		if (session.getAttribute("userId") != null) {
+			userId = session.getAttribute("userId").toString();
+			ArrayList<String> fileInfo = FileUpdateUtil.saveImage(request);
+			FileDAO fileDAO = new FileDAO();
+			fileDAO.addFile(fileInfo, userId);
+		}
 		doGet(request, response);
 	}
 

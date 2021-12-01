@@ -11,18 +11,19 @@ import bo.FileItem;
 import dbconnection.DBConnection;
 
 public class FileDAO {
-	public ArrayList<FileItem> getAllFile() {
+	public ArrayList<FileItem> getAllFileOfMe(String userId) {
 		Connection connection = null;
 		Statement statement = null;
 		ResultSet resultSet = null;
+		PreparedStatement preparedStatement = null;
 		ArrayList<FileItem> files = new ArrayList<FileItem>();
 
 		try {
 			connection = DBConnection.getConnection();
-			String sql = "SELECT * FROM files";
-			statement = connection.createStatement();
-
-			resultSet = statement.executeQuery(sql);
+			String insertSQL = "SELECT * FROM files WHERE userId = ?";
+			preparedStatement = connection.prepareStatement(insertSQL);
+			preparedStatement.setString(1, userId);
+			resultSet = preparedStatement.executeQuery();
 
 			// todo
 			while (resultSet.next()) {
@@ -46,18 +47,19 @@ public class FileDAO {
 		return file;
 	}
 
-	public void addFile(ArrayList<String> fileInfo) {
+	public void addFile(ArrayList<String> fileInfo, String userId) {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		try {
 			connection = DBConnection.getConnection();
-			String insertSQL = "INSERT INTO files (name, type, size, url)" + "VALUES (?, ?, ?, ?)";
+			String insertSQL = "INSERT INTO files (name, type, size, url, userId)" + "VALUES (?, ?, ?, ?, ?)";
 			preparedStatement = connection.prepareStatement(insertSQL);
 			preparedStatement.setString(1, fileInfo.get(0));
 			preparedStatement.setString(2, fileInfo.get(1));
 			preparedStatement.setFloat(3, Integer.parseInt(fileInfo.get(2)));
 			preparedStatement.setString(4, fileInfo.get(3));
+			preparedStatement.setString(5, userId);
 
 			preparedStatement.executeUpdate();
 
