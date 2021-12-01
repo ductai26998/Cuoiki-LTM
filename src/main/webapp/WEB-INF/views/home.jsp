@@ -94,7 +94,7 @@
 	</div>
 	<div id="flex-container-inner">
 		<c:if test="${ username == null }">
-			<h3>
+			<h3 style="padding-left: 20px;">
 				Please login
 				<a href="login" >here</a>
 				to use application !!!
