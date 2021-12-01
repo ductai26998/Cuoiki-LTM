@@ -20,8 +20,7 @@ import utils.FileUpdateUtil;
  * Servlet implementation class Home
  */
 @WebServlet("/home")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 30, // 30 MB
-		maxFileSize = 1024 * 1024 * 50, // 50 MB
+@MultipartConfig(maxFileSize = 1024 * 1024 * 100, // 100 MB
 		maxRequestSize = 1024 * 1024 * 100) // 100 MB
 public class Home extends HttpServlet {
 	private static final long serialVersionUID = 1L;
